@@ -6,7 +6,7 @@ from mysql.connector import Error
 from flask import Flask, render_template, request, url_for, redirect, flash
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
+import psycopg2
 from datetime import datetime
 
 from selenium.webdriver.common.by import By
@@ -48,31 +48,30 @@ chrome_options.add_argument('--disable-gpu')
 
 def insert_data(photo, name, poste, phoneNum, email):
     try:
-        connectiona = mysql.connector.connect(
-            host='bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com',
-            database='bfdj3j5fb85i7sm1epvz',
-            user='uz7gmfxiqthh9yjw',
-            password='JtY9lZvlr545yGJwjloT'
+        connectiona =  psycopg2.connect(
+            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+            database='vendeurdb',
+            user='atlasvoyage',
+            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
         )
 
-        if connectiona.is_connected():
-            cursor = connectiona.cursor()
 
-            # Assuming you have a table named 'vendeur' with appropriate columns
-            query = "INSERT INTO vendeur (photo, name, poste, phoneNum, email) VALUES (%s, %s, %s, %s, %s)"
-            values = (photo, name, poste, phoneNum, email)
-            cursor.execute(query, values)
+        cursor = connectiona.cursor()
 
-            connectiona.commit()
-            print("isert data")
-            cursor.close()
+        # Assuming you have a table named 'vendeur' with appropriate columns
+        query = "INSERT INTO vendeur (photo, name, poste, phoneNum, email) VALUES (%s, %s, %s, %s, %s)"
+        values = (photo, name, poste, phoneNum, email)
+        cursor.execute(query, values)
+
+        connectiona.commit()
+        print("isert data")
+        cursor.close()
 
 
     except Error as e:
         print("Error:", e)
     finally:
-        if connectiona.is_connected():
-            connectiona.close()
+        connectiona.close()
 
 
 
@@ -235,31 +234,30 @@ def formadd():
 def vender():
 
     try:
-        connectiona = mysql.connector.connect(
-            host='bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com',
-            database='bfdj3j5fb85i7sm1epvz',
-            user='uz7gmfxiqthh9yjw',
-            password='JtY9lZvlr545yGJwjloT'
+        connectiona = psycopg2.connect(
+            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+            database='vendeurdb',
+            user='atlasvoyage',
+            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
         )
 
-        if connectiona.is_connected():
-            cursor = connectiona.cursor()
 
-            # Assuming you have a table named 'vendeur' with appropriate columns
-            query = "SELECT * FROM vendeur"
+        cursor = connectiona.cursor()
 
-            cursor.execute(query)
-            dataa = cursor.fetchall()
-            connectiona.commit()
-            print("select data")
-            cursor.close()
+        # Assuming you have a table named 'vendeur' with appropriate columns
+        query = "SELECT * FROM vendeur"
+
+        cursor.execute(query)
+        dataa = cursor.fetchall()
+        connectiona.commit()
+        print("select data")
+        cursor.close()
 
 
     except Error as e:
         print("Error:", e)
     finally:
-        if connectiona.is_connected():
-            connectiona.close()
+        connectiona.close()
 
 
     disimg="none"
@@ -336,31 +334,29 @@ def vender():
 
 
                 try:
-                    connectiona = mysql.connector.connect(
-                        host='bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com',
-                        database='bfdj3j5fb85i7sm1epvz',
-                        user='uz7gmfxiqthh9yjw',
-                        password='JtY9lZvlr545yGJwjloT'
+                    connectiona = psycopg2.connect(
+                        host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+                        database='vendeurdb',
+                        user='atlasvoyage',
+                        password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
                     )
 
-                    if connectiona.is_connected():
-                        cursor = connectiona.cursor()
+                    cursor = connectiona.cursor()
 
-                        # Assuming you have a table named 'vendeur' with appropriate columns
-                        queryq = "SELECT * FROM vendeur where id=" + venderid
+                    # Assuming you have a table named 'vendeur' with appropriate columns
+                    queryq = "SELECT * FROM vendeur where id=" + venderid
 
-                        cursor.execute(queryq)
-                        datavenderid = cursor.fetchall()
-                        connectiona.commit()
-                        print("select data")
-                        cursor.close()
+                    cursor.execute(queryq)
+                    datavenderid = cursor.fetchall()
+                    connectiona.commit()
+                    print("select data")
+                    cursor.close()
 
 
                 except Error as e:
                     print("Error:", e)
                 finally:
-                    if connectiona.is_connected():
-                        connectiona.close()
+                    connectiona.close()
 
                 return render_template('vender.html', prix=prix, disimg=disimg, alertmsg=alertmsg,url=url, dataa=dataa,datavenderid=datavenderid)
 
@@ -369,31 +365,29 @@ def vender():
                     print("Not a valid ")
                     alertmsg = "Invalid URL!!"
                     try:
-                        connectiona = mysql.connector.connect(
-                            host='bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com',
-                            database='bfdj3j5fb85i7sm1epvz',
-                            user='uz7gmfxiqthh9yjw',
-                            password='JtY9lZvlr545yGJwjloT'
+                        connectiona = psycopg2.connect(
+                            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+                            database='vendeurdb',
+                            user='atlasvoyage',
+                            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
                         )
 
-                        if connectiona.is_connected():
-                            cursor = connectiona.cursor()
+                        cursor = connectiona.cursor()
 
-                            # Assuming you have a table named 'vendeur' with appropriate columns
-                            query = "SELECT * FROM vendeur"
+                        # Assuming you have a table named 'vendeur' with appropriate columns
+                        query = "SELECT * FROM vendeur"
 
-                            cursor.execute(query)
-                            dataa = cursor.fetchall()
-                            connectiona.commit()
-                            print("select data")
-                            cursor.close()
+                        cursor.execute(query)
+                        dataa = cursor.fetchall()
+                        connectiona.commit()
+                        print("select data")
+                        cursor.close()
 
 
                     except Error as e:
                         print("Error:", e)
                     finally:
-                        if connectiona.is_connected():
-                            connectiona.close()
+                        connectiona.close()
 
                     return render_template('vender.html', disimg=disimg,alertmsg=alertmsg,dataa=dataa)
 
