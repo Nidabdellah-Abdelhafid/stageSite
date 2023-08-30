@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Screenshot App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+    <!-- Include the jsPDF library -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Generated code</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pay">Pages pays-Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/form">Pages produit-Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vender">vendeur</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+
+            <h1 class="text-center mb-4">Take a Screenshot</h1>
+            <form action="/vender" method="post">
+                <div class="mb-3">
+                    <label for="venderid" class="form-label">Vendeur:</label>
+                    <select class="form-select" aria-label="Default select example" id="venderid" name="venderid" >
+                      <option selected></option>
+                        {% for dataVendera in dataa %}
+                      <option value="{{ dataVendera[0] }}">{{ dataVendera[2] }}</option>
+                         {% endfor %}
+                    </select>
+                    <a type="button" class="text-info btn_open2" id="btn_open2" onclick="getIDM(2)" title="b" style="margin-left: 20px">Ajouter vendeur</a>
+                </div>
+                <div class="mb-3 d-flex">
+
+                    <div class="mb-3 col-8">
+                    <label for="url" class="form-label">URL:</label>
+                    <input type="text" id="url" name="url" class="form-control mr-2" required>
+                        {% if alertmsg %}
+                        <div class="alert-danger mt-2" > {{ alertmsg }}</div>
+                        {% endif %}
+
+                    </div>
+                    <div class="mt-2 mb-3">
+                        <br>
+                    <button class="btn btn-primary ml-2" type="button" disabled id="lid" style="display: none;margin-left: 20px" >
+                    <span class="spinner-border spinner-border-sm" aria-hidden=""></span>
+                    <span class="">Loading...</span>
+                    </button>
+                        <div class="mb-3 d-flex">
+                        <a type="button" class="text-info btn_open1" id="btn_open1" onclick="getIDM(1)" title="b" style="display: none;margin-left: 20px">Voir le site</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="prixid" class="form-label">Prix:</label>
+                    <input type="number" id="prixid" name="prixid" class="form-control">
+                </div>
+                <a type="button" class="btn btn-outline-success text-light btn_open3 float-end mt-4 " id="btn_open3" onclick="getIDM(3)" title="b" style="display: none;">Telecharger</a>
+                <button type="submit" class="btn btn-outline-info text-light  float-end mt-4" id="teleBtn" name="teleBtn" title="b" style="margin-right: 10px" onclick="showImg()">Valider</button>
+            </form>
+
+        </div>
+
+
+
+        <div class="col-lg-12">
+                <dialog class="dialog1 divModall modal1" id="modal1" style="background-color: rgb(56, 54, 54);">
+
+                        <div class="">
+                            <button type="button" class="btn btn-dark text-white btn_close1 float-end" id="btn_close1" >X</button>
+                        </div>
+                        <div class="card-body" style="background-color: rgb(56, 54, 54);">
+
+                            <div  class="mt-4">
+                                <img src="../static/img/image_without_whitespace1.png" alt="_" style="display: {{ disimg }}" id="imagid">
+                            </div>
+                    </div>
+                </dialog>
+        </div>
+        <div class="col-lg-12">
+                <dialog class="dialog1 divModall modal2 col-lg-6" id="modal2" style="background-color: rgb(56, 54, 54);">
+
+                        <div class="">
+                            <button type="button" class="btn btn-dark text-white btn_close2 float-end" id="btn_close2" >X</button>
+                        </div>
+                        <div class="card-body" style="background-color: rgb(56, 54, 54);">
+
+                            <div  class="mt-4 ">
+                                <form action="/vender" method="post" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="photo" class="form-label text-light">Photo:</label>
+                                        <span>
+                                            {% with messages = get_flashed_messages() %}
+                                              {% if messages %}
+                                                <ul>
+                                                {% for message in messages %}
+                                                  <li class="text-light">{{ message }}</li>
+                                                {% endfor %}
+                                                </ul>
+                                              {% endif %}
+                                            {% endwith %}
+                                        </span>
+
+                                        <input type="file" id="file" name="file" class="form-control" accept="image/*" autocomplete="off" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nom_vendeur" class="form-label text-light">Nom complete:</label>
+                                        <input type="text" id="nom_vendeur" name="nom_vendeur" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="poste" class="form-label text-light">Poste:</label>
+                                        <input type="text" id="poste" name="poste" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phoneNum" class="form-label text-light">Numero de telepjone:</label>
+                                        <input type="number" id="phoneNum" name="phoneNum" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label text-light">Email:</label>
+                                        <input type="email" id="email" name="email" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3 d-flex">
+                                        <button type="submit" class="btn btn-outline-success text-white  float-end mr-5"  style="margin-right: 15px" id="addvenderbtn" name="addvenderbtn">Ajouter</button>
+                                        <button type="reset" class="btn btn-outline-secondary text-white  float-end"  >Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                    </div>
+                </dialog>
+        </div>
+
+    <div class="col-lg-12">
+                <dialog class="dialog1 divModall modal3" id="modal3" style="background-color: rgb(56, 54, 54);">
+
+                        <div class="">
+                            <button type="button" class="btn btn-dark text-white btn_close3 float-end" id="btn_close3" >X</button>
+                        </div>
+                        <div class="card-body" style="background-color: white;" id="divContent" name="divContent">
+
+                            <div class="card" style="width:800px;height: 125px">
+                                <div class="d-flex">
+                                <div class="col-md-6" style="height: 125px">
+                                <img src="../static/img/atlaslogo.png" alt="_" class="rounded-circle"  width="120px" height="120px" style="margin-left:20px">
+                                </div>
+                                <div class="col-md-4" style="margin-left:120px">
+                                    <div class="mt-3">
+                                        <h3>Ref: 125555</h3>
+                                        <h3 id="dateCurrentID"></h3>
+                                    </div>
+
+                                 </div>
+                                </div>
+                            </div>
+                            <div  class="mt-4">
+                                <img src="../static/img/image_without_whitespace1.png" alt="_"  width="800px" height="1600px">
+                            </div>
+                            <div  class="mt-4">
+                            <h4 class="text-center">Prix par personne: {{prix}}DH</h4>
+                               {% if datavenderid %}
+                                   {% for d in datavenderid %}
+                                       <div class="card mb-3 col-md-12">
+                                          <div class="row g-0">
+                                            <div class="col-md-4 text-center">
+                                                <img src="../static/uploads/{{d[1]}}" width="140px" height="140px" class="rounded-circle mt-2 mb-2"  alt="---">
+
+                                            </div>
+                                            <div class="col-md-8">
+                                              <div class="card-body">
+                                                <h5 class="card-title">{{d[2]}}</h5>
+                                                <p class=""><i class="bi bi-person-workspace"></i> {{d[3]}}</p>
+                                                <p class=""><i class="bi bi-telephone-plus-fill"></i> {{d[4]}}</p>
+                                                <p class=""><i class="bi bi-envelope-at-fill"></i> {{d[5]}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                       <p class="text-center">Lien de page: {{ url }}</p>
+                                        </div>
+                                       {% endfor  %}
+
+                            {% endif %}
+
+                            </div>
+                    </div>
+                <button type="button" class="btn btn-outline-info mt-2" id="printBtn" name="printBtn">Imprimer</button>
+                </dialog>
+        </div>
+
+</div>
+ </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    var disT = '{{ disimg }}';
+    var alertmsg='{{ alertmsg }}';
+   // var prBTN=document.getElementById('btn_open3');
+
+    if (disT == 'block') {
+        var loaddingElm = document.getElementById('lid');
+        var btn_open1 = document.getElementById('btn_open1');
+        var btn_open3=document.getElementById('btn_open3');
+        loaddingElm.style.display = 'none';
+        btn_open1.style.display = 'block';
+        btn_open3.style.display = 'block';
+
+    }
+    var urlq=document.getElementById('url');
+    var btnScr = document.getElementById('teleBtn');
+
+    function showImg() {
+            var loaddingElm = document.getElementById('lid');
+            var btn_open1 = document.getElementById('btn_open1');
+
+            loaddingElm.style.display = 'block';
+
+            btn_open1.style.display = 'none';
+
+    }
+
+    function getIDM(i){
+             modal=document.querySelector(".modal"+i);
+             btn_open=document.querySelector(".btn_open"+i);
+             btn_close=document.querySelector(".btn_close"+i);
+
+            modal.showModal();
+
+
+            btn_close.addEventListener("click", function() {
+                modal.close();
+            });
+
+      }
+</script>
+<style>
+    .dialog1{
+            border: 0px;
+        border-radius: 15px;
+        }
+        .dialog1::backdrop{
+            border: 0px;
+            background: rgb(0, 0, 0)/.3;
+
+        }
+
+body{
+           color: white;
+           background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.6)),url("static/assets/images/4709918.jpg");
+           background-size: cover;
+           background-attachment: fixed;
+            background-position: center;
+
+       }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    document.getElementById('btn_open3').addEventListener('click', function () {
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        const currentDate = new Date();
+        const formattedDate = formatDate(currentDate);
+        var dateCurrentID=document.getElementById('dateCurrentID');
+
+        dateCurrentID.innerText="Date: "+formattedDate;
+        console.log(formattedDate);
+    });
+       document.getElementById('printBtn').addEventListener('click',async function () {
+        var divContent = document.getElementById('divContent');
+
+
+        //var canvas = await html2canvas(divContent);
+        //var imgData = canvas.toDataURL('image/png');
+
+        // Create a new jsPDF instance
+        //var pdf = new jsPDF();
+
+        // Add the image to the
+       // pdf.addImage(imgData, 'PNG', 16, 5, 180, 290); // Adjust the dimensions
+        var scale = 4; // You can adjust this value
+
+        var canvas = await html2canvas(divContent, { scale: scale });
+
+        // Get the data URL with higher quality
+        var imgData = canvas.toDataURL('image/jpeg', 1.0); // Use JPEG format for better compression
+
+        // Create a new jsPDF instance
+        var pdf = new jsPDF();
+
+        // Calculate the width and height of the image to maintain aspect ratio
+        var imgWidth = 180;
+        var imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        // Add the image to the PDF
+        pdf.addImage(imgData, 'PNG', 16, 3, 180, 295);
+
+        // Save or open the PDF
+        pdf.save('output.pdf');
+
+
+
+    });
+    </script>
+
+<!-- Include the jsPDF library -->
+
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About</title>
+    <script src="static/assets/js/anime.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">Generated code</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Accueil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/pay">Pages pays-Code</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/form">Pages produit-Code</a>
+              </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="/vender">vendeur</a>
+                    </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="row">
+      <h2><p class="textP">Our Generated </p><span class="textC">Code</span></h2>
+      </div>
+    </div>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto',sans-serif;
+        }
+      body {
+        color: white;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+          url("static/assets/images/4709918.jpg");
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+
+      }
+      body .container .row{
+        overflow: hidden;
+        justify-content: center; 
+        align-items: center;
+        min-height: 90vh;
+        display: flex;
+        position: relative;
+        text-align: center;
+      }
+      body .container .row h2{
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        font-size: 16vw;
+        line-height: 0.6em;
+        z-index: 1000;
+        font-weight: 900;
+      }
+      body .container .row h2 p{
+        font-size: 0.12em;
+        margin: 0;
+        padding: 0;
+        letter-spacing: 0.4em;
+        font-weight: 400;
+        text-transform: uppercase;
+      }
+      body .container .row h2 .textC span{
+        position: relative;
+        display: inline-block;
+      }
+      body .container .row h2 .textP span{
+        position: relative;
+        display: inline-block;
+      }
+     .block{
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: rgb(238,174,202);
+        background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+        box-shadow: 10px 10px 50px rgba(0, 0, 0,0.2);
+      }
+
+
+    </style>
+    <script>
+        const row=document.querySelector('.row');
+        for (var i=0;i<=6;i++){
+            const blocks=document.createElement('div');
+            blocks.classList.add('block');
+            row.appendChild(blocks);
+        }
+        function animateBlock(){
+            anime({
+                targets:'.block',
+                translateX:function(){
+                    return anime.random(-700,700);
+                },
+                translateY:function(){
+                    return anime.random(-500,500);
+                },
+                rotate: {
+                value: 360,
+                duration: 1800,
+                easing: 'easeInOutSine'
+            },
+                scale:function(){
+                    return anime.random(1,5);
+                },
+                easing:'linear',
+                duration:3000,
+                delay:anime.stagger(10),
+                borderRadius: ['0%', '50%'],
+                complete:animateBlock,
+            })
+        }
+        animateBlock();
+
+        const textc=document.querySelector('.textC');
+        textc.innerHTML=textc.textContent.replace(/\S/g,"<span>$&</span>");
+        const textp=document.querySelector('.textP');
+        textp.innerHTML=textp.textContent.replace(/\S/g,"<span>$&</span>");
+        
+        anime.timeline({
+            loop:true,
+        })
+        .add({
+            targets:'.textC span',
+            translateY:[-600,0],
+            scale:[10,1],
+            opacity:[0,1],
+            easing:"easeOutExpo",
+            duration:1800,
+            delay:anime.stagger(100),
+        })
+        .add({
+            targets:'.textC span',
+            translateX:[0,-1000],
+            scale:[1,1],
+            opacity:[1,0],
+            easing:"easeOutExpo",
+            duration:2300,
+            delay:anime.stagger(100),
+        })
+        .add({
+            targets:'.textC span',
+            translateX:[1000,0],
+            scale:[1,1],
+            opacity:[0,1],
+            easing:"easeOutExpo",
+            duration:2000,
+            delay:anime.stagger(100),
+        }),
+        anime.timeline({
+            loop:true,
+        }).add({
+            targets:'.textP span',
+            translateY:[-600,0],
+            scale:[10,1],
+            opacity:[0,1],
+            easing:"easeOutExpo",
+            duration:1000,
+            delay:anime.stagger(100),
+        })
+        .add({
+            targets:'.textP span',
+            translateX:[0,-1000],
+            scale:[1,1],
+            opacity:[1,0],
+            easing:"easeOutExpo",
+            duration:1500,
+            delay:anime.stagger(100),
+        })
+        .add({
+            targets:'.textP span',
+            translateX:[1000,0],
+            scale:[1,1],
+            opacity:[0,1],
+            easing:"easeOutExpo",
+            duration:1200,
+            delay:anime.stagger(100),
+        })
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+
+  <script src="static/assets/js/anime.min.js"></script>
+  </body>
+</html>

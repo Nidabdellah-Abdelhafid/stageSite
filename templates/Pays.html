@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated code</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+    <script>
+        localStorage.setItem('counterNb', 0);
+    </script>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Generated code</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pay">Pages pays-Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/form">Pages produit-Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vender">vendeur</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h2>Contenu</h2>
+            <form action="/pay" method="post" id="myForm">
+                <div class="mb-3">
+                    <h4>Background</h4>
+                    <label for="bg-mob" class="form-label">BG Mob:</label>
+                    <input type="text" id="bg-mob" name="bg-mob" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="bg-web" class="form-label">BG Web:</label>
+                    <input type="text" id="bg-web" name="bg-web" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="g-titre" class="form-label">G Titre:</label>
+                    <input type="text" id="g-titre" name="g-titre" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="sous-titre" class="form-label">Sous Titre:</label>
+                    <input type="text" id="sous-titre" name="sous-titre" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <h4>Contenu</h4>
+                    <label for="desc-titre" class="form-label">Desc Titre:</label>
+                    <input type="text" id="desc-titre" name="desc-titre" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" id="description" name="description" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="image1" class="form-label">Image 1:</label>
+                    <input type="text" id="image1" name="image1" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="image2" class="form-label">Image 2:</label>
+                    <input type="text" id="image2" name="image2" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="voirplus" class="form-label">Image Voir plus:</label>
+                    <input type="text" id="voirplus" name="voirplus" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="image3" class="form-label">Image 3:</label>
+                    <input type="text" id="image3" name="image3" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="image4" class="form-label">Image 4:</label>
+                    <input type="text" id="image4" name="image4" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="image5" class="form-label">Image 5:</label>
+                    <input type="text" id="image5" name="image5" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="image6" class="form-label">Image 6:</label>
+                    <input type="text" id="image6" name="image6" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="select-text" class="form-label">Select Text:</label>
+                    <input type="text" id="select-text" name="select-text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Periode" class="form-label">Meilleure période web:</label>
+                    <input type="text" id="Periode" name="Periode" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="Periode-mob" class="form-label">Meilleure période mob:</label>
+                    <input type="text" id="Periode-mob" name="Periode-mob" class="form-control">
+                </div>
+              <div class="mb-3">
+                <label for="counterId" class="form-label">Nombre d'offre :</label>
+                <input type="number" id="counterId"  name="counterId" min="0" max="12"  class="form-control"/>
+                  <button type="button" onclick="getValue()" class="btn btn-success mt-3">Add</button>
+                </div>
+
+                <div id="inputContainer">
+
+                </div>
+
+
+                <br>
+                <div class="mb-3 d-flex">
+                    <label for="visa" class="form-label col-sm-1">Visa:</label>
+
+                    <div class="form-check form-switch float-right">
+                      <input class="form-check-input" name="visa" id="visa" type="checkbox" role="switch" >
+                      <label class="form-check-label" id="toggleLabel" name="toggleLabel" for="visa">Non</label>
+                        <input type="text" id="visaType" value="Non" name="visaType" hidden>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="dureeVole" class="form-label">Durée du vol:</label>
+                    <input type="text" id="dureeVole" name="dureeVole" class="form-control" placeholder="exemple  10h45">
+                </div>
+                <div class="mb-3">
+                    <label for="heureLocale" class="form-label">Heure Locale:</label>
+                    <input type="text" id="heureLocale" name="heureLocale" class="form-control" placeholder="exemple Heure actuelle à Casablanca est: UTC+1">
+                </div>
+                <div class="mb-3">
+                    <label for="monnaieLocale" class="form-label">Monnaie Locale:</label>
+                    <input type="text" id="monnaieLocale" name="monnaieLocale" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="langueParlee" class="form-label">Langue parlée:</label>
+                    <input type="text" id="langueParlee" name="langueParlee" class="form-control" >
+                </div>
+                <div class="mb-3 d-flex">
+                    <label for="vaccins" class="form-label col-4">Vaccins nécessaires:</label>
+
+                    <div class="form-check form-switch float-right">
+                      <input class="form-check-input" name="vaccins" id="vaccins" type="checkbox" role="switch">
+                      <label class="form-check-label" id="toggleLabel2" name="toggleLabel2" for="vaccins">Non</label>
+                        <input type="text" id="vaccinsType" value="Non" name="vaccinsType" hidden>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="bannee-web" class="form-label">Banner Web:</label>
+                    <input type="text" id="bannee-web" name="bannee-web" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="banner-mob" class="form-label">Banner Mob:</label>
+                    <input type="text" id="banner-mob" name="banner-mob" class="form-control">
+                </div>
+                <div class="flex">
+                    <div class="alert alert-warning" role="alert">
+                        <p>Important!</p>
+                      Cliquez d'abord sur le bouton 'Essayer', puis revenez et cliquez sur le bouton 'Compiler'.
+                    </div>
+                    <button type="button" onclick="doCompile()" id="cml_button" name="cml_button" class="btn btn-outline-success btn-lg">Compiler</button>
+
+                    <button type="submit" id="try_button" name="try_button" class="btn btn-outline-info btn-lg">Essayer</button>
+                </div>
+
+
+            </form>
+
+        </div>
+        <div class="col-md-6 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title" style="color: black">Compilation Result</h2>
+                    <textarea style="height: 500px;" title="." placeholder="" id="compiled-code" name="codeGa" class="form-control" rows="8" readonly>
+
+                    </textarea>
+                    <button id="copy-button" class="btn btn-outline-primary mt-3">Copy Code</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    var textarea = document.getElementById("compiled-code");
+    textarea.value='';
+
+
+
+
+    var copyButton = document.getElementById("copy-button");
+
+    copyButton.addEventListener("click", function() {
+        textarea.select();
+        textarea.setSelectionRange(0, 999999);
+        document.execCommand("copy");
+        copyButton.innerHTML = "Code Copied!";
+    });
+
+
+
+    function getValue() {
+           var form = document.getElementById('myForm');
+           var input = form.elements['counterId'];
+           var inputCount = input.value;
+            console.log(inputCount +' nb')
+        //var inputCount = parseInt(document.getElementById('inputCount').value);
+        localStorage.setItem('counterNb', inputCount);
+        var container = document.getElementById('inputContainer');
+        container.innerHTML = '';
+
+        for (var i = 1; i <= inputCount; i++) {
+            var labelImg = document.createElement('label');
+            labelImg.innerHTML = 'Images:';
+            labelImg.id = "imgLabel";
+            labelImg.className = 'form-label';
+
+            var FirstLabelImg = document.createElement('label');
+            FirstLabelImg.innerHTML = 'Image 1:';
+            FirstLabelImg.className = 'form-label';
+
+            var SecondLabelImg = document.createElement('label');
+            SecondLabelImg.innerHTML = 'Image 2:';
+            SecondLabelImg.className = 'form-label';
+
+            var ThirdLabelImg = document.createElement('label');
+            ThirdLabelImg.innerHTML = 'Image 3:';
+            ThirdLabelImg.className = 'form-label';
+
+            var FirstInputImg = document.createElement('input');
+            FirstInputImg.type = 'text';
+            FirstInputImg.name = 'FirstImg' + i;
+            FirstInputImg.id = 'FirstImg' + i;
+            FirstInputImg.className = 'form-control';
+
+            var SecondInputImg = document.createElement('input');
+            SecondInputImg.type = 'text';
+            SecondInputImg.name = 'SecondImg' + i;
+            SecondInputImg.id = 'SecondImg' + i;
+            SecondInputImg.className = 'form-control';
+
+            var ThirdInputImg = document.createElement('input');
+            ThirdInputImg.type = 'text';
+            ThirdInputImg.name = 'ThirdImg' + i;
+            ThirdInputImg.id = 'ThirdImg' + i;
+            ThirdInputImg.className = 'form-control';
+
+            var labelTitle = document.createElement('label');
+            labelTitle.innerHTML = 'Title:';
+            labelTitle.className = 'form-label';
+
+            var inputTitle = document.createElement('input');
+            inputTitle.type = 'text';
+            inputTitle.name = 'title' + i;
+            inputTitle.id = 'title' + i;
+            inputTitle.className = 'form-control';
+
+            var labelSubTitle = document.createElement('label');
+            labelSubTitle.innerHTML = 'Subtitle:';
+            labelSubTitle.className = 'form-label';
+
+            var inputSubTitle = document.createElement('input');
+            inputSubTitle.type = 'text';
+            inputSubTitle.name = 'subTitle' + i;
+            inputSubTitle.id = 'subTitle' + i;
+            inputSubTitle.className = 'form-control';
+
+            var labelDesc = document.createElement('label');
+            labelDesc.innerHTML = 'Description:';
+            labelDesc.className = 'form-label';
+
+            var inputDesc = document.createElement('input');
+            inputDesc.type = 'text';
+            inputDesc.name = 'desc' + i;
+            inputDesc.id = 'desc' + i;
+            inputDesc.className = 'form-control';
+
+            var labelTarif = document.createElement('label');
+            labelTarif.innerHTML = 'Tarif à partir de:';
+            labelTarif.className = 'form-label';
+
+            var inputTarif = document.createElement('input');
+            inputTarif.type = 'number';
+            inputTarif.name = 'tarif' + i;
+            inputTarif.id = 'tarif' + i;
+            inputTarif.className = 'form-control';
+
+            var dhs = document.createElement('label');
+            dhs.innerHTML = 'DHS';
+            dhs.className = 'form-label';
+
+            var labelOffre = document.createElement('label');
+            labelOffre.innerHTML = 'Offre:';
+            labelOffre.className = 'form-label';
+
+            var voirOffre = document.createElement('input');
+            voirOffre.type = 'text';
+            voirOffre.name = 'offre' + i;
+            voirOffre.id = 'offre' + i;
+            voirOffre.className = 'form-control';
+
+            var fieldSet = document.createElement('fieldset');
+            fieldSet.className = 'border p-3';
+            var legend = document.createElement('legend');
+            legend.innerHTML = 'Offre ' + i + ':';
+            fieldSet.appendChild(legend);
+
+            fieldSet.appendChild(labelImg);
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(FirstLabelImg);
+            fieldSet.appendChild(FirstInputImg);
+
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(SecondLabelImg);
+            fieldSet.appendChild(SecondInputImg);
+
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(ThirdLabelImg);
+            fieldSet.appendChild(ThirdInputImg);
+
+            fieldSet.appendChild(document.createElement('br'));
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(labelTitle);
+            fieldSet.appendChild(inputTitle);
+
+            fieldSet.appendChild(document.createElement('br'));
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(labelSubTitle);
+            fieldSet.appendChild(inputSubTitle);
+
+            fieldSet.appendChild(document.createElement('br'));
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(labelDesc);
+            fieldSet.appendChild(inputDesc);
+
+            fieldSet.appendChild(document.createElement('br'));
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(labelTarif);
+            fieldSet.appendChild(inputTarif);
+            fieldSet.appendChild(dhs);
+
+            fieldSet.appendChild(document.createElement('br'));
+            fieldSet.appendChild(document.createElement('br'));
+
+            fieldSet.appendChild(labelOffre);
+            fieldSet.appendChild(voirOffre);
+
+            container.appendChild(fieldSet);
+
+
+
+        }
+
+    }
+    var tryButton = document.getElementById("try_button");
+        tryButton.addEventListener("click", function() {
+
+            const ca = localStorage.getItem('counterNb');
+            for (var i = 1; i <= ca; i++) {
+                var FirstImage = document.getElementById('FirstImg' + i).value;
+                var SecondImage = document.getElementById('SecondImg' + i).value;
+                var ThirdImage = document.getElementById('ThirdImg' + i).value;
+                var Title = document.getElementById('title' + i).value;
+                var SubTitle = document.getElementById('subTitle' + i).value;
+                var Description = document.getElementById('desc' + i).value;
+                var Tarif = document.getElementById('tarif' + i).value;
+                var Offre = document.getElementById('offre' + i).value;
+                console.log(Offre)
+                localStorage.setItem('FirstImage' + i, FirstImage);
+                localStorage.setItem('SecondImage' + i, SecondImage);
+                localStorage.setItem('ThirdImage' + i, ThirdImage);
+                localStorage.setItem('Title' + i, Title);
+                localStorage.setItem('SubTitle' + i, SubTitle);
+                localStorage.setItem('Description' + i, Description);
+                localStorage.setItem('Tarif' + i, Tarif);
+                localStorage.setItem('Offre' + i, Offre);
+        }
+
+        });
+
+        function  doCompile(){
+                const codeGs = localStorage.getItem('codeGnr');
+
+                // Replace the target word
+                const modifiedHtml = codeGs.replaceAll("../static/", "");
+
+                textarea.value=modifiedHtml;
+            }
+
+
+
+
+        const toggleSwitch = document.getElementById("visa");
+        const toggleLabel = document.getElementById("toggleLabel");
+        const visaType = document.getElementById("visaType");
+
+
+        toggleSwitch.addEventListener("change", function() {
+            toggleLabel.textContent = this.checked ? "Oui" : "Non";
+            visaType.value=this.checked ? "Oui" : "Non";
+        });
+
+        const toggleSwitch2 = document.getElementById("vaccins");
+        const toggleLabel2 = document.getElementById("toggleLabel2");
+        const vaccinsType = document.getElementById("vaccinsType");
+
+        toggleSwitch2.addEventListener("change", function() {
+            toggleLabel2.textContent = this.checked ? "Oui" : "Non";
+            vaccinsType.value= this.checked ? "Oui" : "Non";
+
+        });
+
+
+</script>
+<style>
+       body{
+           color: white;
+           background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.6)),url("static/assets/images/4709918.jpg");
+           background-size: cover;
+           background-attachment: fixed;
+            background-position: center;
+
+       }
+   </style>
+</body>
+</html>

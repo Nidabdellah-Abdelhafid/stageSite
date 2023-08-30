@@ -1,0 +1,348 @@
+<!-- form.html -->
+<html>
+ <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+      <script>
+        localStorage.setItem('counterJR', 0);
+    </script>
+    </head>
+  <body>
+   <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Generated code</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pay">Pages pays-Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/form">Pages produit-Code</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vender">vendeur</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+  <div class="container">
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h2>Contenu</h2>
+            <form action="/form" method="post">
+                <div class="mb-3">
+                    <h4>Background</h4>
+                    <label for="bg_mob" class="form-label">BG Mob:</label>
+                    <input type="text" id="bg_mob" name="bg_mob" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="bg_web" class="form-label">BG Web:</label>
+                    <input type="text" id="bg_web" name="bg_web" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="g_titre" class="form-label">G Titre:</label>
+                    <input type="text" id="g_titre" name="g_titre" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="jours" class="form-label">Jours:</label>
+                    <input type="number" id="jours" name="jours" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="MeilleurePer" class="form-label">Meilleure période:</label>
+                    <input type="text" id="MeilleurePer" name="MeilleurePer" class="form-control" placeholder="Exemple : Décembre - Janvier - Février">
+                </div>
+                <div class="mb-3">
+                    <label for="EtapesPrev" class="form-label">Étapes prévues:</label>
+                    <input type="text" id="EtapesPrev" name="EtapesPrev" class="form-control" placeholder="Exemple : Manille - El Nido - Coron">
+                </div>
+                <div class="mb-3">
+                    <label for="Prix" class="form-label">Prix à partir de:</label>
+                    <input type="number" id="Prix" name="Prix" min="0" class="form-control">
+                    <label class="form-label">DHS</label>
+                </div>
+                
+                <div class="mb-3">
+                    <h4>Contenu</h4>
+                    <label for="descriptionc" class="form-label">Description:</label>
+                    <input type="text" id="descriptionc" name="descriptionc" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image:</label>
+                    <input type="text" id="image" name="image" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                <label for="counter" class="form-label">Nombre de jours :</label>
+                <input type="number" id="counter" name="counter" class="form-control">
+                <button type="button" id="btn_counter" name="btn_counter" class="btn btn-info mt-3">Add</button>
+                </div>
+                <div id="divFormJr">
+
+                </div>
+                <h5>Reviews</h5>
+                <div class="mb-3 d-flex">
+                    <div style="margin-left: 10px;" class="col-5">
+                    <label for="Money" class="form-label">Value for money:</label>
+                    <input type="number" id="Money" name="Money" class="form-control" min="0" max="5" placeholder="Give your review from 0 to 5.">
+                    </div>
+                    <div style="margin-left: 10px;" class="col-5">
+                    <label for="Experience" class="form-label">Experience:</label>
+                    <input type="number" id="Experience" name="Experience" class="form-control" min="0" max="5" placeholder="Give your review from 0 to 5.">
+                    </div>
+                    <div style="margin-left: 10px;" class="col-5">
+                    <label for="Tour" class="form-label">Tour guide:</label>
+                    <input type="number" id="Tour" name="Tour" class="form-control" min="0" max="5" placeholder="Give your review from 0 to 5.">
+                    </div>
+                </div>
+                <h5>Reviewers</h5>
+                <br>
+                <h6>Reviewer 1</h6>
+                <div class="mb-3">
+                    <label for="Picture1" class="form-label">Picture:</label>
+                    <input type="text" id="Picture1" name="Picture1" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Name1" class="form-label">Full Name:</label>
+                    <input type="text" id="Name1" name="Name1" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Date1" class="form-label">Date:</label>
+                    <input type="month" id="Date1" name="Date1" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Comment1" class="form-label">Comment:</label>
+                    <input type="text" id="Comment1" name="Comment1" class="form-control">
+                    
+                </div>
+                <br>
+                <h6>Reviewer 2</h6>
+                <div class="mb-3">
+                    <label for="Picture2" class="form-label">Picture:</label>
+                    <input type="text" id="Picture2" name="Picture2" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Name2" class="form-label">Full Name:</label>
+                    <input type="text" id="Name2" name="Name2" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Date2" class="form-label">Date:</label>
+                    <input type="month" id="Date2" name="Date2" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Comment2" class="form-label">Comment:</label>
+                    <input type="text" id="Comment2" name="Comment2" class="form-control">
+                    
+                </div>
+                <h6>Reviewer 3</h6>
+                <div class="mb-3">
+                    <label for="Picture3" class="form-label">Picture:</label>
+                    <input type="text" id="Picture3" name="Picture3" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Name3" class="form-label">Full Name:</label>
+                    <input type="text" id="Name3" name="Name3" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Date3" class="form-label">Date:</label>
+                    <input type="month" id="Date3" name="Date3" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="Comment3" class="form-label">Comment:</label>
+                    <input type="text" id="Comment3" name="Comment3" class="form-control">
+                    
+                </div>
+                <div class="mb-3">
+                    <label for="bannee_web" class="form-label">Banner Web:</label>
+                    <input type="text" id="bannee_web" name="bannee_web" class="form-control">
+                </div>
+                <div class="flex">
+                    <div class="alert alert-warning" role="alert">
+                        <p>Important!</p>
+                      Cliquez d'abord sur le bouton 'Essayer', puis revenez et cliquez sur le bouton 'Compiler'.
+                    </div>
+                    <button type="button" onclick="doCompilejr()" id="cml_button" name="cml_button" class="btn btn-outline-success btn-lg">Compiler</button>
+
+                    <button type="submit" id="btn_tryj" name="btn_tryj" class="btn btn-outline-info btn-lg">Essayer</button>
+                </div>
+          </form>
+
+        </div>
+        <div class="col-md-6 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Compilation Result</h2>
+                    <textarea style="height: 500px;" title="." placeholder="" id="compiled-codeJR" name="codeGaJR" class="form-control" rows="8" readonly>
+
+                    </textarea>
+                    <button id="copy-buttonJR" class="btn btn-outline-primary mt-3">Copy Code</button>
+                </div>
+            </div>
+        </div>
+
+
+  </div>
+        </div>
+
+
+  <script>
+        $(document).ready(function() {
+
+            var counter1 =document.getElementById('counter');
+            var btn_c =document.getElementById('btn_counter');
+            var btn_try =document.getElementById('btn_tryj');
+
+            btn_c.addEventListener('click',()=>{
+                var counter=counter1.value;
+                localStorage.setItem('counterJR', counter);
+                $('#divFormJr').empty();
+                for (var i=1;i<=counter;i++){
+                 var divFormJr =`<p>Jour ${i}: </p><div class="mb-3">
+                    <label for="firstImage" class="form-label">FirstImage:</label>
+                    <input type="text" id="firstImage${i}" name="firstImage${i}" class="form-control">
+                        </div>
+                    <div class="mb-3">
+                    <label for="secondImage" class="form-label">secondImage:</label>
+                    <input type="text" id="secondImage${i}" name="secondImage${i}" class="form-control">
+                        </div>
+                    <div class="mb-3">
+                    <label for="thirdImage" class="form-label">thirdImage:</label>
+                    <input type="text" id="thirdImage${i}" name="thirdImage${i}" class="form-control">
+                        </div>
+                    <div class="mb-3">
+                    <label for="Title" class="form-label">Title:</label>
+                    <input type="text" id="title${i}" name="title${i}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                    <label for="Description" class="form-label">Description:</label>
+                    <input type="text" id="description${i}" name="description${i}" class="form-control">
+
+                </div>
+                    <div class="mb-3">
+                            <label for="programmeJ${i}" class="form-label">Programme :</label>
+                        <input type="number" id="programmeJ${i}" name="programmeJ${i}" class="form-control">
+                        <button type="button" id="btn_programmeJ${i}" onclick="btnProgramme(${i})" name="btn_programmeJ${i}" class="btn btn-secondary mt-2">Add ${i}</button>
+                       </div>
+                        <div class="mb-3" id="progJ${i}" >
+
+                        </div>
+`
+                    $('#divFormJr').append(divFormJr);
+                }
+
+             });
+
+
+
+            btn_try.addEventListener('click',()=>{
+
+                var counterjr=localStorage.getItem('counterJR');
+                for(var i=1;i<=counterjr;i++){
+                    var firstImage = document.getElementById('firstImage' + i).value;
+                    var secondImage = document.getElementById('secondImage' + i).value;
+                    var thirdImage = document.getElementById('thirdImage' + i).value;
+                    var title = document.getElementById('title' + i).value;
+                    var description = document.getElementById('description' + i).value;
+                    localStorage.setItem('firstImage' + i, firstImage);
+                    localStorage.setItem('secondImage' + i, secondImage);
+                    localStorage.setItem('thirdImage' + i, thirdImage);
+                    localStorage.setItem('title' + i, title);
+                    localStorage.setItem('description' + i, description);
+
+                    var programmeJ=localStorage.getItem('programmeJ'+i);
+                    for(var j=1;j<=programmeJ;j++){
+                        var hourp = document.getElementById('hourp' + j+"p"+i).value;
+                        var descp = document.getElementById('descp' + j+"p"+i).value;
+                        var imagep = document.getElementById('imagep' + j+"p"+i).value;
+                        localStorage.setItem('hourp' + j+"p"+i, hourp);
+                        localStorage.setItem('descp' + j+"p"+i, descp);
+                        localStorage.setItem('imagep' + j+"p"+i, imagep);
+                    }
+
+                }
+
+             });
+
+
+             });
+
+  </script>
+  <script>
+      function btnProgramme(id){
+                var programmeJ =document.getElementById('programmeJ'+id).value;
+                localStorage.setItem('programmeJ'+id, programmeJ);
+                $('#progJ'+id).empty();
+                for (var i=1;i<=programmeJ;i++){
+                var proField=`<fieldset class="border p-3"><legend><p>P ${i}</p></legend><div class="mb-3">
+                    <label for="hourp${i}p${id}" class="form-label">Hourp:</label>
+                    <input type="text" id="hourp${i}p${id}" name="hourp${i}p${id}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                    <label for="descp${i}p${id}" class="form-label">Descp:</label>
+                    <input type="text" id="descp${i}p${id}" name="descp${i}p${id}" class="form-control">
+                    </div>
+                       <div class="mb-3">
+                    <label for="imagep${i}p${id}" class="form-label">Imagep:</label>
+                    <input type="text" id="imagep${i}p${id}" name="imagep${i}p${id}" class="form-control">
+                    </div></fieldset>`;
+                $('#progJ'+id).append(proField);
+                }
+            }
+            var textarea = document.getElementById("compiled-codeJR");
+            textarea.value='';
+
+
+
+
+            var copyButton = document.getElementById("copy-buttonJR");
+
+            copyButton.addEventListener("click", function() {
+                textarea.select();
+                textarea.setSelectionRange(0, 999999);
+                document.execCommand("copy");
+                copyButton.innerHTML = "Code Copied!";
+            });
+
+            function  doCompilejr(){
+                const codeGs = localStorage.getItem('codeGnrJR');
+
+                // Replace the target word
+                const modifiedHtml = codeGs.replaceAll("../static/", "");
+
+                textarea.value=modifiedHtml;
+            }
+  </script>
+   <style>
+       body{
+           color: white;
+           background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.6)),url("static/assets/images/4709918.jpg");
+           background-size: cover;
+           background-attachment: fixed;
+            background-position: center;
+
+       }
+   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="anime.min.js"></script>
+  </body>
+</html>
