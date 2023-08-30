@@ -233,10 +233,33 @@ def formadd():
 
 @app.route('/vender' ,methods=['GET', 'POST'])
 def vender():
-    cur=mysqla.connection.cursor()
-    cur.execute("SELECT * FROM vendeur")
-    dataa=cur.fetchall()
 
+    try:
+        connectiona = mysql.connector.connect(
+            host='bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com',
+            database='bfdj3j5fb85i7sm1epvz',
+            user='uz7gmfxiqthh9yjw',
+            password='JtY9lZvlr545yGJwjloT'
+        )
+
+        if connectiona.is_connected():
+            cursor = connectiona.cursor()
+
+            # Assuming you have a table named 'vendeur' with appropriate columns
+            query = "SELECT * FROM vendeur"
+
+            cursor.execute(query)
+            dataa = cursor.fetchall()
+            connectiona.commit()
+            print("select data")
+            cursor.close()
+
+
+    except Error as e:
+        print("Error:", e)
+    finally:
+        if connectiona.is_connected():
+            connectiona.close()
 
 
     disimg="none"
@@ -310,11 +333,34 @@ def vender():
                 prix = request.form['prixid']
                 venderid = request.form['venderid']
 
-                cur = mysqla.connection.cursor()
-                cur.execute("SELECT * FROM vendeur where id=" + venderid)
-                datavenderid = cur.fetchall()
 
-                cur.close()
+
+                try:
+                    connectiona = mysql.connector.connect(
+                        host='bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com',
+                        database='bfdj3j5fb85i7sm1epvz',
+                        user='uz7gmfxiqthh9yjw',
+                        password='JtY9lZvlr545yGJwjloT'
+                    )
+
+                    if connectiona.is_connected():
+                        cursor = connectiona.cursor()
+
+                        # Assuming you have a table named 'vendeur' with appropriate columns
+                        queryq = "SELECT * FROM vendeur where id=" + venderid
+
+                        cursor.execute(queryq)
+                        datavenderid = cursor.fetchall()
+                        connectiona.commit()
+                        print("select data")
+                        cursor.close()
+
+
+                except Error as e:
+                    print("Error:", e)
+                finally:
+                    if connectiona.is_connected():
+                        connectiona.close()
 
                 return render_template('vender.html', prix=prix, disimg=disimg, alertmsg=alertmsg,url=url, dataa=dataa,datavenderid=datavenderid)
 
@@ -322,9 +368,33 @@ def vender():
             else:
                     print("Not a valid ")
                     alertmsg = "Invalid URL!!"
-                    cur.execute("SELECT * FROM vendeur")
-                    dataa = cur.fetchall()
-                    cur.close()
+                    try:
+                        connectiona = mysql.connector.connect(
+                            host='bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com',
+                            database='bfdj3j5fb85i7sm1epvz',
+                            user='uz7gmfxiqthh9yjw',
+                            password='JtY9lZvlr545yGJwjloT'
+                        )
+
+                        if connectiona.is_connected():
+                            cursor = connectiona.cursor()
+
+                            # Assuming you have a table named 'vendeur' with appropriate columns
+                            query = "SELECT * FROM vendeur"
+
+                            cursor.execute(query)
+                            dataa = cursor.fetchall()
+                            connectiona.commit()
+                            print("select data")
+                            cursor.close()
+
+
+                    except Error as e:
+                        print("Error:", e)
+                    finally:
+                        if connectiona.is_connected():
+                            connectiona.close()
+
                     return render_template('vender.html', disimg=disimg,alertmsg=alertmsg,dataa=dataa)
 
         if 'addvenderbtn' in request.form:
