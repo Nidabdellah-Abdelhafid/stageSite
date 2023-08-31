@@ -9,7 +9,6 @@ from PIL import Image
 
 from urllib.parse import urlparse
 
-
 import os
 
 from werkzeug.utils import secure_filename
@@ -26,7 +25,7 @@ app.config['MYSQL_USER'] = 'uz7gmfxiqthh9yjw'
 app.config['MYSQL_PASSWORD'] = 'JtY9lZvlr545yGJwjloT'
 app.config['MYSQL_DB'] = 'bfdj3j5fb85i7sm1epvz'
 
-mysqla=MySQL(app)
+mysqla = MySQL(app)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 
@@ -39,13 +38,12 @@ def allowed_file(filename):
 
 def insert_data(photo, name, poste, phoneNum, email):
     try:
-        connectiona =  psycopg2.connect(
+        connectiona = psycopg2.connect(
             host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
             database='vendeurdb',
             user='atlasvoyage',
             password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
         )
-
 
         cursor = connectiona.cursor()
 
@@ -65,13 +63,13 @@ def insert_data(photo, name, poste, phoneNum, email):
         connectiona.close()
 
 
-
 def is_valid_url(url):
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
     except ValueError:
         return False
+
 
 @app.route('/pay', methods=['GET', 'POST'])
 def index():
@@ -137,6 +135,7 @@ def index():
 def pro():
     return render_template("about.html")
 
+
 @app.route('/form', methods=['GET', 'POST'])
 def formadd():
     if request.method == 'POST':
@@ -157,11 +156,11 @@ def formadd():
         picture1 = request.form['Picture1']
         fullName1 = request.form['Name1']
         date11 = request.form['Date1']
-        if date11 !="":
-            date111 =datetime.strptime(date11, '%Y-%m')
+        if date11 != "":
+            date111 = datetime.strptime(date11, '%Y-%m')
             date1 = date111.strftime('%B %Y')
         else:
-            date1 =""
+            date1 = ""
 
         comment1 = request.form['Comment1']
 
@@ -172,7 +171,7 @@ def formadd():
             date222 = datetime.strptime(date22, '%Y-%m')
             date2 = date222.strftime('%B %Y')
         else:
-            date2 =""
+            date2 = ""
         comment2 = request.form['Comment2']
 
         picture3 = request.form['Picture3']
@@ -180,9 +179,9 @@ def formadd():
         date33 = request.form['Date3']
         if date33 != "":
             date333 = datetime.strptime(date33, '%Y-%m')
-            date3 =date333.strftime('%B %Y')
+            date3 = date333.strftime('%B %Y')
         else:
-            date3 =""
+            date3 = ""
 
         comment3 = request.form['Comment3']
 
@@ -199,7 +198,7 @@ def formadd():
                                    Prix=prix,
                                    Description=descriptionc,
                                    Image=image,
-                                   
+
                                    MoneyValue=moneyValue,
                                    Experience=experience,
                                    TourGuide=tourGuide,
@@ -221,9 +220,8 @@ def formadd():
     return render_template('form.html')
 
 
-@app.route('/vender' ,methods=['GET', 'POST'])
+@app.route('/vender', methods=['GET', 'POST'])
 def vender():
-
     try:
         connectiona = psycopg2.connect(
             host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
@@ -231,7 +229,6 @@ def vender():
             user='atlasvoyage',
             password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
         )
-
 
         cursor = connectiona.cursor()
 
@@ -250,9 +247,8 @@ def vender():
     finally:
         connectiona.close()
 
-
-    disimg="none"
-    alertmsg=""
+    disimg = "none"
+    alertmsg = ""
     if request.method == 'POST':
         if 'teleBtn' in request.form:
 
@@ -300,11 +296,8 @@ def vender():
                 imgo = remove_whitespace('fullpage_screenshot.png')
                 disimg = "block"
 
-
                 prix = request.form['prixid']
                 venderid = request.form['venderid']
-
-
 
                 try:
                     connectiona = psycopg2.connect(
@@ -331,38 +324,39 @@ def vender():
                 finally:
                     connectiona.close()
 
-                return render_template('vender.html', prix=prix, disimg=disimg, alertmsg=alertmsg,url=url, dataa=dataa,datavenderid=datavenderid)
+                return render_template('vender.html', prix=prix, disimg=disimg, alertmsg=alertmsg, url=url, dataa=dataa,
+                                       datavenderid=datavenderid)
 
 
             else:
-                    print("Not a valid ")
-                    alertmsg = "Invalid URL!!"
-                    try:
-                        connectiona = psycopg2.connect(
-                            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
-                            database='vendeurdb',
-                            user='atlasvoyage',
-                            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
-                        )
+                print("Not a valid ")
+                alertmsg = "Invalid URL!!"
+                try:
+                    connectiona = psycopg2.connect(
+                        host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+                        database='vendeurdb',
+                        user='atlasvoyage',
+                        password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
+                    )
 
-                        cursor = connectiona.cursor()
+                    cursor = connectiona.cursor()
 
-                        # Assuming you have a table named 'vendeur' with appropriate columns
-                        query = "SELECT * FROM vendeur"
+                    # Assuming you have a table named 'vendeur' with appropriate columns
+                    query = "SELECT * FROM vendeur"
 
-                        cursor.execute(query)
-                        dataa = cursor.fetchall()
-                        connectiona.commit()
-                        print("select data")
-                        cursor.close()
+                    cursor.execute(query)
+                    dataa = cursor.fetchall()
+                    connectiona.commit()
+                    print("select data")
+                    cursor.close()
 
 
-                    except Error as e:
-                        print("Error:", e)
-                    finally:
-                        connectiona.close()
+                except Error as e:
+                    print("Error:", e)
+                finally:
+                    connectiona.close()
 
-                    return render_template('vender.html', disimg=disimg,alertmsg=alertmsg,dataa=dataa)
+                return render_template('vender.html', disimg=disimg, alertmsg=alertmsg, dataa=dataa)
 
         if 'addvenderbtn' in request.form:
 
@@ -384,17 +378,14 @@ def vender():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 # print('upload_image filename: ' + filename)
 
-                return redirect(url_for('vender',disimg=disimg,alertmsg=alertmsg, filename=filename,dataa=dataa))
-                #return render_template('vender.html', disimg=disimg,alertmsg=alertmsg, filename=filename,dataa=dataa)
+                return redirect(url_for('vender', disimg=disimg, alertmsg=alertmsg, filename=filename, dataa=dataa))
+                # return render_template('vender.html', disimg=disimg,alertmsg=alertmsg, filename=filename,dataa=dataa)
             else:
                 flash('Allowed image types are - png, jpg, jpeg, gif')
                 return redirect(request.url)
 
-
-
-    return render_template('vender.html', disimg=disimg,alertmsg=alertmsg,dataa=dataa)
-
+    return render_template('vender.html', disimg=disimg, alertmsg=alertmsg, dataa=dataa)
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5000)
+    app.run(host="0.0.0.0", port=5000)
