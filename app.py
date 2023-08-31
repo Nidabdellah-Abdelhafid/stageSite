@@ -1,17 +1,12 @@
-import time
-import mysql.connector
-
 from flask_mysqldb import MySQL
 from mysql.connector import Error
 from flask import Flask, render_template, request, url_for, redirect, flash
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+
+import subprocess
 import psycopg2
 from datetime import datetime
+from PIL import Image
 
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from urllib.parse import urlparse
 
 
@@ -40,10 +35,6 @@ def allowed_file(filename):
 
 
 # Set up Chrome options
-chrome_options = Options()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')
-
 
 
 def insert_data(photo, name, poste, phoneNum, email):
@@ -266,38 +257,13 @@ def vender():
         if 'teleBtn' in request.form:
 
             url = request.form['url']
-
+            script_path = os.path.join(os.path.dirname(__file__), 'screenshot.js')
+            subprocess.run(['node', script_path, url])
             if is_valid_url(url):
 
                 print("Valid URL")
-                # Create a WebDriver instance
-                driver = webdriver.Chrome(options=chrome_options)
-                driver.get(url)
-                time.sleep(1)
-                wait = WebDriverWait(driver, 10)
 
-                wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
-                # Execute JavaScript to hide header and footer
-                script = """
-                            var header = document.querySelectorAll('header');
-                            var footer = document.querySelector('footer');
-                            header.forEach(element => {
-                                element.style.display = 'none';
-                              });
-    
-                            footer.style.display = 'none';
-                            """
-                driver.execute_script(script)
-                total_height = driver.execute_script("return document.body.scrollHeight")
-
-                driver.set_window_size(1400, total_height)
-
-                time.sleep(1)
-                screenshot_path = 'fullpage_screenshot.png'  # Make sure the filename ends with .png
-                driver.save_screenshot("static/img/" + screenshot_path)
-                from PIL import Image
-
-                def remove_bottom_whitespace(screenshot_path):
+                def remove_whitespace(screenshot_path):
                     # Open the image
                     img = Image.open("static/img/" + screenshot_path)
 
@@ -308,25 +274,32 @@ def vender():
                     width, height = img.size
 
                     # Find the bottom-most pixel that is not white
-                    last_non_white_pixel = height - 1
+                    last_non_white_pixel_y = height - 1
                     for y in range(height - 1, -1, -1):
                         if any(img.getpixel((x, y))[:-1] != (255, 255, 255) for x in range(width)):
-                            last_non_white_pixel = y
+                            last_non_white_pixel_y = y
                             break
 
-                    # Crop the image to remove the white space at the bottom
-                    img = img.crop((0, 0, width, last_non_white_pixel + 1))
+                    # Find the right-most pixel that is not white
+                    last_non_white_pixel_x = width - 1
+                    for x in range(width - 1, -1, -1):
+                        if any(img.getpixel((x, y))[:-1] != (255, 255, 255) for y in range(height)):
+                            last_non_white_pixel_x = x
+                            break
+
+                    # Crop the image to remove the white space at the bottom and right
+                    img = img.crop((0, 0, last_non_white_pixel_x + 1, last_non_white_pixel_y + 1))
 
                     # Save the cropped image
                     img.save('static/img/image_without_whitespace1.png')
                     return img
 
-                # Call the function with the path to your image
-                # Replace with your image file path
-                imgo = remove_bottom_whitespace(screenshot_path)
+                    # Call the function with the path to your image
+                    # Replace with your image file path
+
+                imgo = remove_whitespace('fullpage_screenshot.png')
                 disimg = "block"
 
-                driver.quit()
 
                 prix = request.form['prixid']
                 venderid = request.form['venderid']
