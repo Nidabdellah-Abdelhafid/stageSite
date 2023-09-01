@@ -1,8 +1,8 @@
-import mysql.connector
 from mysql.connector import Error
 from flask import Flask, render_template, request, url_for, redirect, flash
 from playwright.sync_api import sync_playwright
 
+import psycopg2
 from datetime import datetime
 
 import time
@@ -86,31 +86,29 @@ def capture_full_page_screenshot(url):
             print("image saved!!")
 def insert_data(photo, name, poste, phoneNum, email):
     try:
-        connectiona = mysql.connector.connect(
-            host='abdelhafid.mysql.pythonanywhere-services.com',
-            database='abdelhafid$vendeurdb',
-            user='abdelhafid',
-            password='dbNID#11'
+        connectiona = psycopg2.connect(
+            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+            database='vendeurdb',
+            user='atlasvoyage',
+            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
         )
 
-        if connectiona.is_connected():
-            cursor = connectiona.cursor()
+        cursor = connectiona.cursor()
 
-            # Assuming you have a table named 'vendeur' with appropriate columns
-            query = "INSERT INTO vendeur (photo, name, poste, phoneNum, email) VALUES (%s, %s, %s, %s, %s)"
-            values = (photo, name, poste, phoneNum, email)
-            cursor.execute(query, values)
+        # Assuming you have a table named 'vendeur' with appropriate columns
+        query = "INSERT INTO vendeur (photo, name, poste, phoneNum, email) VALUES (%s, %s, %s, %s, %s)"
+        values = (photo, name, poste, phoneNum, email)
+        cursor.execute(query, values)
 
-            connectiona.commit()
-            print("isert data")
-            cursor.close()
+        connectiona.commit()
+        print("isert data")
+        cursor.close()
 
 
     except Error as e:
         print("Error:", e)
     finally:
-        if connectiona.is_connected():
-            connectiona.close()
+        connectiona.close()
 
 
 def is_valid_url(url):
@@ -273,27 +271,29 @@ def formadd():
 @app.route('/vender', methods=['GET', 'POST'])
 def vender():
     try:
-        connectiona = mysql.connector.connect(
-            host='abdelhafid.mysql.pythonanywhere-services.com',
-            database='abdelhafid$vendeurdb',
-            user='abdelhafid',
-            password='dbNID#11'
+        connectiona = psycopg2.connect(
+            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+            database='vendeurdb',
+            user='atlasvoyage',
+            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
         )
 
-        if connectiona.is_connected():
-            cursor = connectiona.cursor()
+        cursor = connectiona.cursor()
 
-            # Assuming you have a table named 'vendeur' with appropriate columns
-            query = "SELECT * FROM vendeur"
+        # Assuming you have a table named 'vendeur' with appropriate columns
+        query = "SELECT * FROM vendeur"
 
-            cursor.execute(query)
-            dataa = cursor.fetchall()
-            connectiona.commit()
-            print("select data")
-            cursor.close()
+        cursor.execute(query)
+        dataa = cursor.fetchall()
+        connectiona.commit()
+        print("select data")
+        cursor.close()
+
 
     except Error as e:
         print("Error:", e)
+    finally:
+        connectiona.close()
 
     disimg = "none"
     alertmsg = ""
@@ -314,28 +314,29 @@ def vender():
                 venderid = request.form['venderid']
 
                 try:
-                    connectiona = mysql.connector.connect(
-                        host='abdelhafid.mysql.pythonanywhere-services.com',
-                        database='abdelhafid$vendeurdb',
-                        user='abdelhafid',
-                        password='dbNID#11'
+                    connectiona = psycopg2.connect(
+                        host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+                        database='vendeurdb',
+                        user='atlasvoyage',
+                        password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
                     )
 
-                    if connectiona.is_connected():
-                        cursor = connectiona.cursor()
+                    cursor = connectiona.cursor()
 
-                        # Assuming you have a table named 'vendeur' with appropriate columns
-                        queryq = "SELECT * FROM vendeur where id=" + venderid
+                    # Assuming you have a table named 'vendeur' with appropriate columns
+                    queryq = "SELECT * FROM vendeur where id=" + venderid
 
-                        cursor.execute(queryq)
-                        datavenderid = cursor.fetchall()
+                    cursor.execute(queryq)
+                    datavenderid = cursor.fetchall()
+                    connectiona.commit()
+                    print("select data")
+                    cursor.close()
 
-                        connectiona.commit()
-                        print("select data")
-                        cursor.close()
 
                 except Error as e:
                     print("Error:", e)
+                finally:
+                    connectiona.close()
 
                 return render_template('vender.html', prix=prix, disimg=disimg, alertmsg=alertmsg, url=url, dataa=dataa,
                                        datavenderid=datavenderid)
@@ -345,27 +346,29 @@ def vender():
                 print("Not a valid ")
                 alertmsg = "Invalid URL!!"
                 try:
-                    connectiona = mysql.connector.connect(
-                        host='abdelhafid.mysql.pythonanywhere-services.com',
-                        database='abdelhafid$vendeurdb',
-                        user='abdelhafid',
-                        password='dbNID#11'
+                    connectiona = psycopg2.connect(
+                        host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
+                        database='vendeurdb',
+                        user='atlasvoyage',
+                        password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
                     )
 
-                    if connectiona.is_connected():
-                        cursor = connectiona.cursor()
+                    cursor = connectiona.cursor()
 
-                        # Assuming you have a table named 'vendeur' with appropriate columns
-                        query = "SELECT * FROM vendeur"
+                    # Assuming you have a table named 'vendeur' with appropriate columns
+                    query = "SELECT * FROM vendeur"
 
-                        cursor.execute(query)
+                    cursor.execute(query)
+                    dataa = cursor.fetchall()
+                    connectiona.commit()
+                    print("select data")
+                    cursor.close()
 
-                        connectiona.commit()
-                        print("select data")
-                        cursor.close()
 
                 except Error as e:
                     print("Error:", e)
+                finally:
+                    connectiona.close()
 
                 return render_template('vender.html', disimg=disimg, alertmsg=alertmsg, dataa=dataa)
 
