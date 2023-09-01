@@ -1,8 +1,10 @@
-﻿mysql==0.0.3
+mysql==0.0.3
 mysql-connector-python==8.0.27
 flask==2.0.1
 werkzeug==2.2.3
 Flask-MySQLdb==1.0.1
 gunicorn==21.2.0
 selenium==4.11.2
+psycopg2==2.9.7
+psycopg2-binary==2.9.7
 playwright==1.35.0
