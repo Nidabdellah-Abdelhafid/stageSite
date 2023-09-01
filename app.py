@@ -1,12 +1,11 @@
-from flask_mysqldb import MySQL
+import mysql.connector
 from mysql.connector import Error
 from flask import Flask, render_template, request, url_for, redirect, flash
+from playwright.sync_api import sync_playwright
 
-import subprocess
-import psycopg2
 from datetime import datetime
-from PIL import Image
 
+import time
 from urllib.parse import urlparse
 
 import os
@@ -20,12 +19,8 @@ UPLOAD_FOLDER = 'static/uploads/'
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-app.config['MYSQL_HOST'] = 'bfdj3j5fb85i7sm1epvz-mysql.services.clever-cloud.com'
-app.config['MYSQL_USER'] = 'uz7gmfxiqthh9yjw'
-app.config['MYSQL_PASSWORD'] = 'JtY9lZvlr545yGJwjloT'
-app.config['MYSQL_DB'] = 'bfdj3j5fb85i7sm1epvz'
 
-mysqla = MySQL(app)
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 
@@ -34,33 +29,88 @@ def allowed_file(filename):
 
 
 # Set up Chrome options
+def capture_full_page_screenshot(url):
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        try:
+            page.goto(url, timeout=60000)
 
+            # Wait for the page to fully load
+            page.wait_for_load_state('load')
 
+            # Scroll to the end of the page
+            page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
+
+            # Wait for a brief moment to ensure everything is loaded after scrolling
+            time.sleep(2)
+
+            # Execute JavaScript to hide header and footer
+            script = """
+                var header = document.querySelectorAll('header');
+                var footer = document.querySelector('footer');
+
+                if (header) {
+                    header.forEach(element => {
+                        element.style.display = 'none';
+                    });
+                }
+                if (footer) {
+                    footer.style.display = 'none';
+                }
+            """
+            page.evaluate(script)
+
+            # Get the full page content height after hiding header and footer
+            total_height = page.evaluate("() => document.body.scrollHeight")
+
+            # Set the viewport size to match the full page height
+            page.set_viewport_size({"width": 1400, "height": total_height})
+
+            # Capture a screenshot of the full page
+            screenshot = page.screenshot()
+
+            # Save the screenshot to a file or process it as needed
+            screenshot_dir = os.path.join(app.root_path, 'static/img')
+            screenshot_path = os.path.join(screenshot_dir, 'image_without_whitespace1.png')
+
+            # Save the screenshot to the specified path
+            with open(screenshot_path, 'wb') as file:
+                file.write(screenshot)
+
+        except Exception as e:
+            print(f'An error occurred: {e}')
+
+        finally:
+            browser.close()
+            print("image saved!!")
 def insert_data(photo, name, poste, phoneNum, email):
     try:
-        connectiona = psycopg2.connect(
-            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
-            database='vendeurdb',
-            user='atlasvoyage',
-            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
+        connectiona = mysql.connector.connect(
+            host='abdelhafid.mysql.pythonanywhere-services.com',
+            database='abdelhafid$vendeurdb',
+            user='abdelhafid',
+            password='dbNID#11'
         )
 
-        cursor = connectiona.cursor()
+        if connectiona.is_connected():
+            cursor = connectiona.cursor()
 
-        # Assuming you have a table named 'vendeur' with appropriate columns
-        query = "INSERT INTO vendeur (photo, name, poste, phoneNum, email) VALUES (%s, %s, %s, %s, %s)"
-        values = (photo, name, poste, phoneNum, email)
-        cursor.execute(query, values)
+            # Assuming you have a table named 'vendeur' with appropriate columns
+            query = "INSERT INTO vendeur (photo, name, poste, phoneNum, email) VALUES (%s, %s, %s, %s, %s)"
+            values = (photo, name, poste, phoneNum, email)
+            cursor.execute(query, values)
 
-        connectiona.commit()
-        print("isert data")
-        cursor.close()
+            connectiona.commit()
+            print("isert data")
+            cursor.close()
 
 
     except Error as e:
         print("Error:", e)
     finally:
-        connectiona.close()
+        if connectiona.is_connected():
+            connectiona.close()
 
 
 def is_valid_url(url):
@@ -223,29 +273,27 @@ def formadd():
 @app.route('/vender', methods=['GET', 'POST'])
 def vender():
     try:
-        connectiona = psycopg2.connect(
-            host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
-            database='vendeurdb',
-            user='atlasvoyage',
-            password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
+        connectiona = mysql.connector.connect(
+            host='abdelhafid.mysql.pythonanywhere-services.com',
+            database='abdelhafid$vendeurdb',
+            user='abdelhafid',
+            password='dbNID#11'
         )
 
-        cursor = connectiona.cursor()
+        if connectiona.is_connected():
+            cursor = connectiona.cursor()
 
-        # Assuming you have a table named 'vendeur' with appropriate columns
-        query = "SELECT * FROM vendeur"
+            # Assuming you have a table named 'vendeur' with appropriate columns
+            query = "SELECT * FROM vendeur"
 
-        cursor.execute(query)
-        dataa = cursor.fetchall()
-        connectiona.commit()
-        print("select data")
-        cursor.close()
-
+            cursor.execute(query)
+            dataa = cursor.fetchall()
+            connectiona.commit()
+            print("select data")
+            cursor.close()
 
     except Error as e:
         print("Error:", e)
-    finally:
-        connectiona.close()
 
     disimg = "none"
     alertmsg = ""
@@ -253,76 +301,41 @@ def vender():
         if 'teleBtn' in request.form:
 
             url = request.form['url']
-            script_path = os.path.join(os.path.dirname(__file__), 'screenshot.js')
-            subprocess.run(['node', script_path, url])
+
+
             if is_valid_url(url):
 
                 print("Valid URL")
+                capture_full_page_screenshot(url)
 
-                def remove_whitespace(screenshot_path):
-                    # Open the image
-                    img = Image.open("static/img/" + screenshot_path)
-
-                    # Convert to RGBA to handle transparency (if needed)
-                    img = img.convert('RGBA')
-
-                    # Get the image dimensions
-                    width, height = img.size
-
-                    # Find the bottom-most pixel that is not white
-                    last_non_white_pixel_y = height - 1
-                    for y in range(height - 1, -1, -1):
-                        if any(img.getpixel((x, y))[:-1] != (255, 255, 255) for x in range(width)):
-                            last_non_white_pixel_y = y
-                            break
-
-                    # Find the right-most pixel that is not white
-                    last_non_white_pixel_x = width - 1
-                    for x in range(width - 1, -1, -1):
-                        if any(img.getpixel((x, y))[:-1] != (255, 255, 255) for y in range(height)):
-                            last_non_white_pixel_x = x
-                            break
-
-                    # Crop the image to remove the white space at the bottom and right
-                    img = img.crop((0, 0, last_non_white_pixel_x + 1, last_non_white_pixel_y + 1))
-
-                    # Save the cropped image
-                    img.save('static/img/image_without_whitespace1.png')
-                    return img
-
-                    # Call the function with the path to your image
-                    # Replace with your image file path
-
-                imgo = remove_whitespace('fullpage_screenshot.png')
                 disimg = "block"
 
                 prix = request.form['prixid']
                 venderid = request.form['venderid']
 
                 try:
-                    connectiona = psycopg2.connect(
-                        host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
-                        database='vendeurdb',
-                        user='atlasvoyage',
-                        password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
+                    connectiona = mysql.connector.connect(
+                        host='abdelhafid.mysql.pythonanywhere-services.com',
+                        database='abdelhafid$vendeurdb',
+                        user='abdelhafid',
+                        password='dbNID#11'
                     )
 
-                    cursor = connectiona.cursor()
+                    if connectiona.is_connected():
+                        cursor = connectiona.cursor()
 
-                    # Assuming you have a table named 'vendeur' with appropriate columns
-                    queryq = "SELECT * FROM vendeur where id=" + venderid
+                        # Assuming you have a table named 'vendeur' with appropriate columns
+                        queryq = "SELECT * FROM vendeur where id=" + venderid
 
-                    cursor.execute(queryq)
-                    datavenderid = cursor.fetchall()
-                    connectiona.commit()
-                    print("select data")
-                    cursor.close()
+                        cursor.execute(queryq)
+                        datavenderid = cursor.fetchall()
 
+                        connectiona.commit()
+                        print("select data")
+                        cursor.close()
 
                 except Error as e:
                     print("Error:", e)
-                finally:
-                    connectiona.close()
 
                 return render_template('vender.html', prix=prix, disimg=disimg, alertmsg=alertmsg, url=url, dataa=dataa,
                                        datavenderid=datavenderid)
@@ -332,29 +345,27 @@ def vender():
                 print("Not a valid ")
                 alertmsg = "Invalid URL!!"
                 try:
-                    connectiona = psycopg2.connect(
-                        host='dpg-cjnon8ocfp5c73eunki0-a.oregon-postgres.render.com',
-                        database='vendeurdb',
-                        user='atlasvoyage',
-                        password='9pyfwrhghabxLmFLyrhW04mOlqXoBywi'
+                    connectiona = mysql.connector.connect(
+                        host='abdelhafid.mysql.pythonanywhere-services.com',
+                        database='abdelhafid$vendeurdb',
+                        user='abdelhafid',
+                        password='dbNID#11'
                     )
 
-                    cursor = connectiona.cursor()
+                    if connectiona.is_connected():
+                        cursor = connectiona.cursor()
 
-                    # Assuming you have a table named 'vendeur' with appropriate columns
-                    query = "SELECT * FROM vendeur"
+                        # Assuming you have a table named 'vendeur' with appropriate columns
+                        query = "SELECT * FROM vendeur"
 
-                    cursor.execute(query)
-                    dataa = cursor.fetchall()
-                    connectiona.commit()
-                    print("select data")
-                    cursor.close()
+                        cursor.execute(query)
 
+                        connectiona.commit()
+                        print("select data")
+                        cursor.close()
 
                 except Error as e:
                     print("Error:", e)
-                finally:
-                    connectiona.close()
 
                 return render_template('vender.html', disimg=disimg, alertmsg=alertmsg, dataa=dataa)
 
